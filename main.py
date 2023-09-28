@@ -2,11 +2,12 @@ import tkinter as tk
 from tkinter import ttk
 import customtkinter
 from PIL import ImageTk,Image
+import pandas as pd
+import datetime
+#from win10toast import ToastNotifier
+#from plyer import notification
 
-
-#BIKIN KOLOM NAMA
-#BIKIN ALGORITMA EXCEL
-#BIKIN SQL
+#Text Bottons keluarkan
 
 list_tugas_pagi = [
      'Menyiapkan bahan dan peralatan untuk pengamatan',
@@ -22,7 +23,7 @@ list_tugas_pagi = [
 ]
 list_tugas_siang = [
     'Menyiapkan bahan dan peralatan untuk pengamatan',
-     'Mengecek peralatan operasional'
+     'Mengecek peralatan operasional',
      'Melaksanakan pengamatan cuaca permukaan dengan alat konvensional',
      'Melaksanakan pengamatan cuaca permukaan dengan alat otomatis',
      'Melakukan pengolahan data tingkat dasar (MET REPORT, SPECI, MET REPORT, dan SPECIAL REPORT)',
@@ -50,10 +51,12 @@ list_tugas_malam2 = [
     'Melaksanakan pengumpulan dan penyebaran data dengan menggunakan sistem internet/CMSS',
     'Melakukan pengisian logbook METAR/SPECI, Sinop, Udara Atas, Peralatan'
 ]
-tugas_tambahan_pagi = []
-tugas_tambahan_siang = []
-tugas_tambahan_malam1 = []
-tugas_tambahan_malam2 = []
+tugas_checkbuttons_pagi = []
+tugas_checkbuttons_siang = []
+tugas_checkbuttons_malam1 = []
+tugas_checkbuttons_malam2 = []
+# Define a DataFrame to store the tasks
+tasks_df = pd.DataFrame(columns=["Shift", "Task"])
 # fungsi untuk membuat halaman dinas Pagi
 def dinas_pagi_page():
     def toggle_color(checkbutton, var):
@@ -74,12 +77,11 @@ def dinas_pagi_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_pagi.append((tugas_checkbutton, tugas_checkbutton_var))
     pagi_page = tk.Toplevel(root)
     pagi_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
     
 
-    tugas_checkbuttons = []
     for tugas in list_tugas_pagi:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(pagi_page, 
@@ -91,9 +93,9 @@ def dinas_pagi_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_pagi.append((tugas_checkbutton, tugas_checkbutton_var))
     # Attach the toggle_color function to each checkbutton
-    for checkbutton, var in tugas_checkbuttons:
+    for checkbutton, var in tugas_checkbuttons_pagi:
         checkbutton.config(command=lambda btn=checkbutton, v=var: toggle_color(btn, v))
     pagi_page.title("Selamat Pagi")
     submit_button = tk.Button(pagi_page, text="Submit", command=submitted, font=("Helvetica", 20),relief="raised")
@@ -120,7 +122,7 @@ def dinas_siang_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_siang.append((tugas_checkbutton, tugas_checkbutton_var))
     siang_page = tk.Toplevel(root)
     siang_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
     def toggle_color(checkbutton, var):
@@ -128,7 +130,7 @@ def dinas_siang_page():
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-    tugas_checkbuttons = []
+    
     for tugas in list_tugas_siang:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(siang_page, 
@@ -140,9 +142,9 @@ def dinas_siang_page():
                                            offvalue="unchecked"
                                            )
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_siang.append((tugas_checkbutton, tugas_checkbutton_var))
     # Attach the toggle_color function to each checkbutton
-    for checkbutton, var in tugas_checkbuttons:
+    for checkbutton, var in tugas_checkbuttons_siang:
         checkbutton.config(command=lambda btn=checkbutton, v=var: toggle_color(btn, v))
     siang_page.title("Selamat Siang")
     submit_button = tk.Button(siang_page, text="Submit", command=submitted, font=("Helvetica", 20),relief="raised")
@@ -169,7 +171,7 @@ def dinas_malam1_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_malam1.append((tugas_checkbutton, tugas_checkbutton_var))
         
     malam1_page = tk.Toplevel(root)
     malam1_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
@@ -178,7 +180,7 @@ def dinas_malam1_page():
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-    tugas_checkbuttons = []
+    
     for tugas in list_tugas_siang:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam1_page, 
@@ -190,9 +192,9 @@ def dinas_malam1_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_malam1.append((tugas_checkbutton, tugas_checkbutton_var))
     # Attach the toggle_color function to each checkbutton
-    for checkbutton, var in tugas_checkbuttons:
+    for checkbutton, var in tugas_checkbuttons_malam1:
         checkbutton.config(command=lambda btn=checkbutton, v=var: toggle_color(btn, v))
     malam1_page.title("Selamat Malam")
     submit_button = tk.Button(malam1_page, text="Submit", command=submitted, font=("Helvetica", 20),relief="raised")
@@ -219,7 +221,7 @@ def dinas_malam2_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
     malam2_page = tk.Toplevel(root)
     malam2_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
     def toggle_color(checkbutton, var):
@@ -227,7 +229,7 @@ def dinas_malam2_page():
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-    tugas_checkbuttons = []
+    
     for tugas in list_tugas_siang:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam2_page, 
@@ -240,14 +242,14 @@ def dinas_malam2_page():
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
         #tugas_checkbuttons.append(tugas_checkbutton)
-        tugas_checkbuttons.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
     # Attach the toggle_color function to each checkbutton
-    for checkbutton, var in tugas_checkbuttons:
+    for checkbutton, var in tugas_checkbuttons_malam2:
         checkbutton.config(command=lambda btn=checkbutton, v=var: toggle_color(btn, v))
     malam2_page.title("Selamat Malam")
     submit_button = tk.Button(malam2_page, 
                               text="Submit", 
-                              command=submitted, 
+                              command=save_to_excel, 
                               font=("Helvetica", 20),
                               relief="raised")
     submit_button.pack()
@@ -259,25 +261,22 @@ def dinas_malam2_page():
     add_task_button = tk.Button(malam2_page, text="Add Task", command=add_task)
     add_task_button.pack(anchor='w')
 def submitted():
+    '''
+    # Show a toast notification when the data is saved
+    toast_message = f"Submitted"
+    notification.notify(
+        title="Task Report",
+        message=toast_message,
+        app_name="YourApp",
+    )
+    #toast_message = f"Tasks saved to '{excel_file_name}'"
+    #toaster.show_toast("Task Report", toast_message, duration=10)
+    '''
     submit_page = tk.Toplevel(root)
     submit_page.title("Tersubmit (contoh)")
     submit_label = tk.Label(submit_page, text="Tersubmit (contoh)", font=("Helvetica", 24))
     submit_label.pack(padx=10, pady=10)
     submit_page.after(3000, submit_page.destroy)
-'''
-def add_task():
-    addTask_page = tk.Toplevel(root)
-    addTask_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
-    # Create an input field and "Add Task" button
-    task_entry = tk.Entry(addTask_page, font=("Helvetica", 14))
-    task_entry.pack(anchor='w')
-    task = task_entry.get()
-    tugas_checkbuttons=[]
-    if task:
-            new_task_checkbutton = tk.Checkbutton(selected_page, text=task, font=("Helvetica", 14))
-            new_task_checkbutton.pack(anchor='w')
-            tugas_checkbuttons.append(new_task_checkbutton)
-            task_entry.delete(0, tk.END)  # Clear the input field'''
 def handle_shift():
     selected_shift = cb1.get()
     if selected_shift == "Dinas Pagi":
@@ -289,6 +288,20 @@ def handle_shift():
     else: dinas_malam2_page()
     name.append(entry1)
     print(name)
+
+def save_to_excel():
+    global tasks_df
+    tasks_df = pd.DataFrame(columns=["Shift","Name", "Task"])
+    for checkbutton, name, var in tugas_checkbuttons_pagi:
+        task = checkbutton.cget("text")
+        state = var.get()
+        if state == "checked":
+            shift = cb1.get()
+            tasks_df = tasks_df.append({"Shift": shift,"Name":name, "Task": task}, ignore_index=True)
+
+    # Save the DataFrame to an Excel file (replace 'tasks.xlsx' with your desired file name)
+    tasks_df.to_excel("report.xlsx", index=False)
+    print("Tasks saved to 'tasks.xlsx'")
     
 
 # Create the main application window
