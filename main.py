@@ -299,9 +299,15 @@ def save_to_excel():
             shift = cb1.get()
             tasks_df = tasks_df.append({"Shift": shift,"Name":name, "Task": task}, ignore_index=True)
 
-    # Save the DataFrame to an Excel file (replace 'tasks.xlsx' with your desired file name)
-    tasks_df.to_excel("report.xlsx", index=False)
-    print("Tasks saved to 'tasks.xlsx'")
+    ## Get the current local date and time
+    local_date = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    # Generate the Excel file name with the local date
+    excel_file_name = f"report_{local_date}.xlsx"
+
+    # Save the DataFrame to the Excel file
+    tasks_df.to_excel(excel_file_name, index=False)
+    print(f"Tasks saved to '{excel_file_name}'")
     
 
 # Create the main application window
