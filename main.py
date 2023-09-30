@@ -287,8 +287,8 @@ def handle_shift():
     elif selected_shift == "Dinas Malam1":
         dinas_malam1_page()
     else: dinas_malam2_page()
-    name.append(cb1)
-    print(name)
+    nama.append(cb1)
+    print(nama)
     
 
 # Create the main application window
