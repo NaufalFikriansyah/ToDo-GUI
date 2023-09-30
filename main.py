@@ -7,13 +7,6 @@ import datetime
 #from win10toast import ToastNotifier
 #from plyer import notification
 
-<<<<<<< HEAD
-
-#BIKIN ALGORITMA EXCEL
-=======
-#Fungsi add task
->>>>>>> ab1cc372371d221fb75bd9bed95494c2e5b98460
-
 list_tugas_pagi = [
      'Menyiapkan bahan dan peralatan untuk pengamatan',
      'Mengecek peralatan operasional',
@@ -212,13 +205,8 @@ def dinas_malam1_page():
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-<<<<<<< HEAD
     tugas_checkbuttons = []
     for tugas in list_tugas_malam1:
-=======
-    
-    for tugas in list_tugas_siang:
->>>>>>> ab1cc372371d221fb75bd9bed95494c2e5b98460
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam1_page, 
                                            text=tugas, 
@@ -246,7 +234,7 @@ def dinas_malam1_page():
 
 # fungsi untuk membuat halaman dinas Malam2
 def dinas_malam2_page():
-    '''def add_task():
+    def add_task():
         tugas= task_entry.get()
         list_tugas_malam2.append(str(tugas))
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
@@ -259,7 +247,7 @@ def dinas_malam2_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))'''
+        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
     def add_task():
         tugas = task_entry.get()
         list_tugas_malam2.append(str(tugas))
@@ -272,13 +260,8 @@ def dinas_malam2_page():
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-<<<<<<< HEAD
     tugas_checkbuttons = []
     for tugas in list_tugas_malam2:
-=======
-    
-    for tugas in list_tugas_siang:
->>>>>>> ab1cc372371d221fb75bd9bed95494c2e5b98460
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam2_page, 
                                            text=tugas, 
@@ -306,16 +289,17 @@ def dinas_malam2_page():
     submit_button.pack()
 
     # Create an input field and "Add Task" button
-    #task_entry = tk.Entry(malam2_page, font=("Helvetica", 14))
-    #task_entry.pack(anchor='w')
+    task_entry = tk.Entry(malam2_page, font=("Helvetica", 14))
+    task_entry.pack(anchor='w')
 
     add_task_button = tk.Button(malam2_page, text="Add Task", command=add_task)
     add_task_button.pack(anchor='w')
+
      #Display the current task list for Dinas Malam1
     update_task_list("Dinas Malam1", tugas_checkbuttons_malam1)
 
 def submitted():
-    '''
+
     # Show a toast notification when the data is saved
     toast_message = f"Submitted"
     notification.notify(
@@ -323,16 +307,16 @@ def submitted():
         message=toast_message,
         app_name="YourApp",
     )
-    #toast_message = f"Tasks saved to '{excel_file_name}'"
-    #toaster.show_toast("Task Report", toast_message, duration=10)
-    '''
+    toast_message = f"Tasks saved to '{excel_file_name}'"
+    toaster.show_toast("Task Report", toast_message, duration=10)
+    
     submit_page = tk.Toplevel(root)
     submit_page.title("Tersubmit!")
     submit_label = tk.Label(submit_page, text="Tersubmit!", font=("Helvetica", 24))
     submit_label.pack(padx=10, pady=10)
     submit_page.after(3000, submit_page.destroy)
+
 # Function to open the Add Task window
-'''
 def add_task_window(shift_list, shift_name):
     def add_task():
         task = task_entry.get()
@@ -372,7 +356,6 @@ def refresh_checklist():
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
         tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
-'''
 
 def handle_shift():
     selected_shift = cb2.get()
@@ -383,33 +366,8 @@ def handle_shift():
     elif selected_shift == "Dinas Malam1":
         dinas_malam1_page()
     else: dinas_malam2_page()
-<<<<<<< HEAD
     nama.append(cb1)
     print(nama)
-=======
-    name.append(entry1)
-    print(name)
-
-def save_to_excel():
-    global tasks_df
-    tasks_df = pd.DataFrame(columns=["Shift","Name", "Task"])
-    for checkbutton, name, var in tugas_checkbuttons_pagi:
-        task = checkbutton.cget("text")
-        state = var.get()
-        if state == "checked":
-            shift = cb1.get()
-            tasks_df = tasks_df.append({"Shift": shift,"Name":name, "Task": task}, ignore_index=True)
-
-    ## Get the current local date and time
-    local_date = datetime.datetime.now().strftime("%Y-%m-%d")
-
-    # Generate the Excel file name with the local date
-    excel_file_name = f"report_{local_date}.xlsx"
-
-    # Save the DataFrame to the Excel file
-    tasks_df.to_excel(excel_file_name, index=False)
-    print(f"Tasks saved to '{excel_file_name}'")
->>>>>>> ab1cc372371d221fb75bd9bed95494c2e5b98460
     
 def save_to_excel():
     global tasks_df
