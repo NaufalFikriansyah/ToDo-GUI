@@ -4,9 +4,7 @@ import customtkinter
 from PIL import ImageTk,Image
 
 
-#BIKIN KOLOM NAMA
 #BIKIN ALGORITMA EXCEL
-#BIKIN SQL
 
 list_tugas_pagi = [
      'Menyiapkan bahan dan peralatan untuk pengamatan',
@@ -290,6 +288,25 @@ def handle_shift():
     nama.append(cb1)
     print(nama)
     
+def save_to_excel():
+    global tasks_df
+    tasks_df = pd.DataFrame(columns=["Shift","Nama", "Task"])
+    for checkbutton, name, var in tugas_checkbuttons_pagi:
+        task = checkbutton.cget("text")
+        state = var.get()
+        if state == "checked":
+            shift = cb1.get()
+            tasks_df = tasks_df.append({"Shift": shift,"Nama":nama, "Task": task}, ignore_index=True)
+
+    ## Get the current local date and time
+    local_date = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    # Generate the Excel file name with the local date
+    excel_file_name = f"report_{local_date}.xlsx"
+
+    # Save the DataFrame to the Excel file
+    tasks_df.to_excel(excel_file_name, index=False)
+    print(f"Tasks saved to '{excel_file_name}'")
 
 # Create the main application window
 root = customtkinter.CTk() 
