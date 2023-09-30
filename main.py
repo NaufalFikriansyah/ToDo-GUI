@@ -22,11 +22,11 @@ list_tugas_pagi = [
 ]
 list_tugas_siang = [
     'Menyiapkan bahan dan peralatan untuk pengamatan',
-     'Mengecek peralatan operasional'
+     'Mengecek peralatan operasional',
      'Melaksanakan pengamatan cuaca permukaan dengan alat konvensional',
      'Melaksanakan pengamatan cuaca permukaan dengan alat otomatis',
      'Melakukan pengolahan data tingkat dasar (MET REPORT, SPECI, MET REPORT, dan SPECIAL REPORT)',
-     'Melaksanakan pengamatan udara atas (pibal) dengan alat tehodolite pukul 06.00 UTC',
+     'Melaksanakan pengamatan udara atas (pibal) dengan alat theodolite pukul 06.00 UTC',
      'Melaksanakan pengumpulan dan penyebaran data dengan menggunakan sistem internet/CMSS',
      'Mengganti pias Camble Stokes',
      'Melakukan pengisian logbook METAR/SPECI, Sinop, Udara Atas, Peralatan'
@@ -46,7 +46,7 @@ list_tugas_malam2 = [
     'Melaksanakan pengamatan cuaca permukaan dengan alat konvensional',
     'Melaksanakan pengamatan cuaca permukaan dengan alat otomatis',
     'Melakukan pengolahan data tingkat dasar (MET REPORT, SPECI, MET REPORT, dan SPECIAL REPORT)',
-    'Melaksanakan pengamatan udara atas (pibal) dengan alat tehodolite pukul 00.00 UTC',
+    'Melaksanakan pengamatan udara atas (pibal) dengan alat theodolite pukul 00.00 UTC',
     'Melaksanakan pengumpulan dan penyebaran data dengan menggunakan sistem internet/CMSS',
     'Melakukan pengisian logbook METAR/SPECI, Sinop, Udara Atas, Peralatan'
 ]
@@ -67,7 +67,7 @@ def dinas_pagi_page():
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(pagi_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center', 
                                            fg='Black', 
                                            variable=tugas_checkbutton_var, 
@@ -84,7 +84,7 @@ def dinas_pagi_page():
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(pagi_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center', 
                                            fg='Black',
                                            variable=tugas_checkbutton_var,
@@ -113,7 +113,7 @@ def dinas_siang_page():
         tugas_checkbutton_var = tk.StringVar()
         tugas_checkbutton = tk.Checkbutton(siang_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center', 
                                            fg='Black',
                                            variable=tugas_checkbutton_var, 
@@ -133,7 +133,7 @@ def dinas_siang_page():
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(siang_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center',
                                            variable=tugas_checkbutton_var,
                                            onvalue="checked",
@@ -162,7 +162,7 @@ def dinas_malam1_page():
         tugas_checkbutton_var = tk.StringVar()
         tugas_checkbutton = tk.Checkbutton(malam1_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center', 
                                            fg='Black',
                                            variable=tugas_checkbutton_var, 
@@ -179,11 +179,11 @@ def dinas_malam1_page():
         else:
             checkbutton.config(fg="black")
     tugas_checkbuttons = []
-    for tugas in list_tugas_siang:
+    for tugas in list_tugas_malam1:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam1_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center',
                                            fg='Black',
                                            variable=tugas_checkbutton_var,
@@ -212,7 +212,7 @@ def dinas_malam2_page():
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam2_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center', 
                                            fg='Black',
                                            variable=tugas_checkbutton_var, 
@@ -228,11 +228,11 @@ def dinas_malam2_page():
         else:
             checkbutton.config(fg="black")
     tugas_checkbuttons = []
-    for tugas in list_tugas_siang:
+    for tugas in list_tugas_malam2:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam2_page, 
                                            text=tugas, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center',
                                            fg='Black',
                                            variable=tugas_checkbutton_var,
@@ -260,8 +260,8 @@ def dinas_malam2_page():
     add_task_button.pack(anchor='w')
 def submitted():
     submit_page = tk.Toplevel(root)
-    submit_page.title("Tersubmit (contoh)")
-    submit_label = tk.Label(submit_page, text="Tersubmit (contoh)", font=("Helvetica", 24))
+    submit_page.title("Tersubmit!")
+    submit_label = tk.Label(submit_page, text="Tersubmit!", font=("Helvetica", 24))
     submit_label.pack(padx=10, pady=10)
     submit_page.after(3000, submit_page.destroy)
 '''
@@ -279,7 +279,7 @@ def add_task():
             tugas_checkbuttons.append(new_task_checkbutton)
             task_entry.delete(0, tk.END)  # Clear the input field'''
 def handle_shift():
-    selected_shift = cb1.get()
+    selected_shift = cb2.get()
     if selected_shift == "Dinas Pagi":
         dinas_pagi_page()
     elif selected_shift == "Dinas Siang":
@@ -287,7 +287,7 @@ def handle_shift():
     elif selected_shift == "Dinas Malam1":
         dinas_malam1_page()
     else: dinas_malam2_page()
-    name.append(entry1)
+    name.append(cb1)
     print(name)
     
 
@@ -305,17 +305,18 @@ l1.pack()
 frame=customtkinter.CTkFrame(master=l1, width=700, height=360, corner_radius=15)
 frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-root_label = customtkinter.CTkLabel(frame, text="Stasiun Meteorologi Sultan Muhammad Salahuddin", font=("Century Gothic", 20), pady=100)
+root_label = customtkinter.CTkLabel(frame, text="Stasiun Meteorologi Sultan Muhammad Salahuddin", font=("Century Gothic", 20,"bold"), pady=100)
 root_label.place(x=100, y=-10)
 
-entry1=customtkinter.CTkEntry(master=frame, width=220, placeholder_text='Nama')
-entry1.place(x=250, y=180)
-name = []
+nama=['Idham','Jumratul Aida, S.Tr', 'Laksita Widomurti, S.Tr', 'Lavia Farareta, S.Tr','Ni Luh Jenitha Asdia Putri, S.Tr. Met','Ni Putu Andini Ganiswari, S.Tr','Suci Ainun Rimawati, S.Tr','Surya Tri Dharma Putra, S.Tr','Tri Wahyu, S.Tr. Met','Zulkurnain, S.Tr']
+cb1 = customtkinter.CTkComboBox(master=frame, values=nama, width=220) # Combobox
+cb1.set(' ') # default selected option
+cb1.place(x=250, y=150)
 
 shift=['Dinas Pagi','Dinas Siang','Dinas Malam1','Dinas Malam2'] # options
-cb1 = customtkinter.CTkComboBox(master=frame, values=shift, width=220) # Combobox
-cb1.set('Dinas Pagi') # default selected option
-cb1.place(x=250, y=205)
+cb2 = customtkinter.CTkComboBox(master=frame, values=shift, width=220) # Combobox
+cb2.set(' ') # default selected option
+cb2.place(x=250, y=190)
 
 #Create custom button
 button1 = customtkinter.CTkButton(master=frame, width=220, text="Login", command=handle_shift, corner_radius=6)
