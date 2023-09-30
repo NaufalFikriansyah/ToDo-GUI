@@ -7,7 +7,7 @@ import datetime
 #from win10toast import ToastNotifier
 #from plyer import notification
 
-#Text Bottons keluarkan
+#Fungsi add task
 
 list_tugas_pagi = [
      'Menyiapkan bahan dan peralatan untuk pengamatan',
@@ -55,8 +55,34 @@ tugas_checkbuttons_pagi = []
 tugas_checkbuttons_siang = []
 tugas_checkbuttons_malam1 = []
 tugas_checkbuttons_malam2 = []
+
+shift_tasks = {
+    "Dinas Pagi": list_tugas_pagi,
+    "Dinas Siang": list_tugas_siang,
+    "Dinas Malam1": list_tugas_malam1,
+    "Dinas Malam2": list_tugas_malam2,
+}
 # Define a DataFrame to store the tasks
-tasks_df = pd.DataFrame(columns=["Shift", "Task"])
+tasks_df = pd.DataFrame(columns=["Shift","Name", "Task"])
+
+def update_task_list(shift_name, checkbutton_list):
+    # Clear existing tasks
+    for checkbutton, var in checkbutton_list:
+        checkbutton.destroy()
+
+    # Display updated tasks
+    for task in shift_tasks[shift_name]:
+        tugas_checkbutton_var = tk.StringVar(value="unchecked")
+        tugas_checkbutton = tk.Checkbutton(root, 
+                                           text=task, 
+                                           font=("Helvetica", 20), 
+                                           justify='center', 
+                                           fg='Black',
+                                           variable=tugas_checkbutton_var, 
+                                           onvalue="checked",
+                                           offvalue="unchecked")
+        tugas_checkbutton.pack(anchor='w')
+        checkbutton_list.append((tugas_checkbutton, tugas_checkbutton_var))
 # fungsi untuk membuat halaman dinas Pagi
 def dinas_pagi_page():
     def toggle_color(checkbutton, var):
@@ -156,6 +182,7 @@ def dinas_siang_page():
 
     add_task_button = tk.Button(siang_page, text="Add Task", command=add_task)
     add_task_button.pack(anchor='w')
+
 # fungsi untuk membuat halaman dinas Malam1
 def dinas_malam1_page():
     def add_task():
@@ -206,9 +233,10 @@ def dinas_malam1_page():
 
     add_task_button = tk.Button(malam1_page, text="Add Task", command=add_task)
     add_task_button.pack(anchor='w')
+
 # fungsi untuk membuat halaman dinas Malam2
 def dinas_malam2_page():
-    def add_task():
+    '''def add_task():
         tugas= task_entry.get()
         list_tugas_malam2.append(str(tugas))
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
@@ -221,7 +249,12 @@ def dinas_malam2_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
+        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))'''
+    def add_task():
+        tugas = task_entry.get()
+        list_tugas_malam2.append(str(tugas))
+        task_entry.delete(0, tk.END)  # Clear the input field
+        update_task_list("Dinas Malam2", tugas_checkbuttons_malam1)
     malam2_page = tk.Toplevel(root)
     malam2_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
     def toggle_color(checkbutton, var):
@@ -246,6 +279,9 @@ def dinas_malam2_page():
     # Attach the toggle_color function to each checkbutton
     for checkbutton, var in tugas_checkbuttons_malam2:
         checkbutton.config(command=lambda btn=checkbutton, v=var: toggle_color(btn, v))
+    # Create an input field and "Add Task" button
+    task_entry = tk.Entry(malam2_page, font=("Helvetica", 14))
+    task_entry.pack(anchor='w')
     malam2_page.title("Selamat Malam")
     submit_button = tk.Button(malam2_page, 
                               text="Submit", 
@@ -255,11 +291,14 @@ def dinas_malam2_page():
     submit_button.pack()
 
     # Create an input field and "Add Task" button
-    task_entry = tk.Entry(malam2_page, font=("Helvetica", 14))
-    task_entry.pack(anchor='w')
+    #task_entry = tk.Entry(malam2_page, font=("Helvetica", 14))
+    #task_entry.pack(anchor='w')
 
     add_task_button = tk.Button(malam2_page, text="Add Task", command=add_task)
     add_task_button.pack(anchor='w')
+     #Display the current task list for Dinas Malam1
+    update_task_list("Dinas Malam1", tugas_checkbuttons_malam1)
+
 def submitted():
     '''
     # Show a toast notification when the data is saved
@@ -277,6 +316,49 @@ def submitted():
     submit_label = tk.Label(submit_page, text="Tersubmit (contoh)", font=("Helvetica", 24))
     submit_label.pack(padx=10, pady=10)
     submit_page.after(3000, submit_page.destroy)
+# Function to open the Add Task window
+'''
+def add_task_window(shift_list, shift_name):
+    def add_task():
+        task = task_entry.get()
+        shift_list.append(task)
+        add_task_window.destroy()
+        refresh_checklist()
+    
+    add_task_window = tk.Toplevel(root)
+    add_task_window.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
+    add_task_window.title(f"Tambah Tugas {shift_name}")
+
+    task_label = tk.Label(add_task_window, text=f"Tambah Tugas untuk {shift_name}:", font=("Helvetica", 14))
+    task_label.pack(anchor='w')
+
+    task_entry = tk.Entry(add_task_window, font=("Helvetica", 14))
+    task_entry.pack(anchor='w')
+
+    add_task_button = tk.Button(add_task_window, text="Tambah Tugas", command=add_task)
+    add_task_button.pack(anchor='w')
+# Function to refresh the checklist of tasks
+def refresh_checklist():
+    for checkbutton, var in tugas_checkbuttons_malam2:
+        checkbutton.destroy()
+    tugas_checkbuttons_malam2.clear()
+    malam2_page = tk.Toplevel(root)
+    malam2_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
+    for task_var, name_var in list_tugas_malam2:
+        tugas_checkbutton_var = tk.StringVar(value="unchecked")
+        
+        tugas_checkbutton = tk.Checkbutton(malam2_page,
+                                           text=task_var.get(),
+                                           font=("Helvetica", 20),
+                                           justify='center',
+                                           fg='Black',
+                                           variable=tugas_checkbutton_var,
+                                           onvalue="checked",
+                                           offvalue="unchecked")
+        tugas_checkbutton.pack(anchor='w')
+        tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
+'''
+
 def handle_shift():
     selected_shift = cb1.get()
     if selected_shift == "Dinas Pagi":
