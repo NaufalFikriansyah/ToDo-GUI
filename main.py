@@ -73,7 +73,7 @@ def update_task_list(shift_name, checkbutton_list):
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(root, 
                                            text=task, 
-                                           font=("Helvetica", 20), 
+                                           font=("Helvetica", 18), 
                                            justify='center', 
                                            fg='Black',
                                            variable=tugas_checkbutton_var, 
@@ -149,6 +149,8 @@ def dinas_siang_page():
         tugas_checkbuttons_siang.append((tugas_checkbutton, tugas_checkbutton_var))
     siang_page = tk.Toplevel(root)
     siang_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
+    
+    tugas_checkbuttons = []
     def toggle_color(checkbutton, var):
         if var.get() == "checked":
             checkbutton.config(fg="red")
@@ -200,12 +202,14 @@ def dinas_malam1_page():
         
     malam1_page = tk.Toplevel(root)
     malam1_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
+
+    tugas_checkbuttons = []
     def toggle_color(checkbutton, var):
         if var.get() == "checked":
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-    tugas_checkbuttons = []
+    
     for tugas in list_tugas_malam1:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam1_page, 
@@ -255,12 +259,14 @@ def dinas_malam2_page():
         update_task_list("Dinas Malam2", tugas_checkbuttons_malam1)
     malam2_page = tk.Toplevel(root)
     malam2_page.geometry(f"{root.winfo_screenwidth()}x{root.winfo_screenheight()}")
+
+    tugas_checkbuttons = []
     def toggle_color(checkbutton, var):
         if var.get() == "checked":
             checkbutton.config(fg="red")
         else:
             checkbutton.config(fg="black")
-    tugas_checkbuttons = []
+    
     for tugas in list_tugas_malam2:
         tugas_checkbutton_var = tk.StringVar(value="unchecked")
         tugas_checkbutton = tk.Checkbutton(malam2_page, 
@@ -272,7 +278,7 @@ def dinas_malam2_page():
                                            onvalue="checked",
                                            offvalue="unchecked")
         tugas_checkbutton.pack(anchor='w')
-        #tugas_checkbuttons.append(tugas_checkbutton)
+        tugas_checkbuttons.append(tugas_checkbutton)
         tugas_checkbuttons_malam2.append((tugas_checkbutton, tugas_checkbutton_var))
     # Attach the toggle_color function to each checkbutton
     for checkbutton, var in tugas_checkbuttons_malam2:
@@ -372,11 +378,11 @@ def handle_shift():
 def save_to_excel():
     global tasks_df
     tasks_df = pd.DataFrame(columns=["Shift","Nama", "Task"])
-    for checkbutton, name, var in tugas_checkbuttons_pagi:
+    for checkbutton, nama, var in tugas_checkbuttons_pagi:
         task = checkbutton.cget("text")
         state = var.get()
         if state == "checked":
-            shift = cb1.get()
+            shift = cb2.get()
             tasks_df = tasks_df.append({"Shift": shift,"Nama":nama, "Task": task}, ignore_index=True)
 
     ## Get the current local date and time
